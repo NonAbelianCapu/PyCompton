@@ -30,6 +30,6 @@ class Particle_Source:
             mu_y = sin_theta*math.sin(phi)
             mu_z = cos_theta
 
-            tmp_particle = particle.Particle(self.position, [mu_x, mu_y, mu_z], 10)
+            tmp_particle = particle.Particle(n,self.position, [mu_x, mu_y, mu_z], 10)
 
             self.particles.append(tmp_particle)

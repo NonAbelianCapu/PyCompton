@@ -4,7 +4,9 @@ import detector
 
 class Particle:
 
-	def __init__(self,pos,mu,energy):
+	def __init__(self,id,pos,mu,energy):
+
+		self.id = id 
 
 		self.__x = pos[0]
 		self.__y = pos[1]
@@ -15,7 +17,7 @@ class Particle:
 		self.__mu_y = mu[1]
 		self.__mu_z = mu[2]
 
-		self.energy = 0
+		self.__energy = 0
 		self.__weight = 1
 		self.__is_alive = True
 
@@ -30,6 +32,24 @@ class Particle:
 
 		return [self.__x, self.__y, self.__z]
 
+	@property
+	def energy(self):
+		return self.__energy
+
+	@property
+	def is_alive(self):
+		return self.__is_alive
+
+	@position.setter
+	def position(self, value):
+
+		self.__x = value[0]
+		self.__y = value[1]
+		self.__z = value[2]
+
+	@energy.setter
+	def energy(self, value):
+		self.__energy = value
 
 	def pprint(self):
 		print(self.__x,self.__y,self.__z,self.__mu_x,self.__mu_y, self.__mu_z)
@@ -38,30 +58,33 @@ class Particle:
 
 		treshold = 0.2
 
-		self.weight = self.weight*(1- mu_a/mu_t)
+		self.__weight = self.__weight*(1- mu_a/mu_t)
 
-		if self.weight < treshold:
+		if self.__weight < treshold:
 
-			self.is_alive = False
+			self.__is_alive = False
 
 	def is_in_detector(self,detector):
 
+		# check if the particle is in the detector
+
 		if isinstance(volume, detector.Detector):
-			volume.parametric_check(self.position)
+			if volume.parametric_check(self):
+				return True
+			else:
+				return False
 
 		else:
 			raise Warning("Volume is not a detector")
 
+	def evolve_particle(self,s):
 
-
-	def update_position(self,s):
-
-		self.x = self.x + self.mu_x*s
-		self.y = self.y + self.mu_y*s
-		self.z = self.z + self.mu_z*s
+		self.__x = self.__x + self.__mu_x*s
+		self.__y = self.__y + self.__mu_y*s
+		self.__z = self.__z + self.__mu_z*s
 
 	def update_energy(self):
-		pass 
+		pass
 
 	def update_cosines(self):
 
