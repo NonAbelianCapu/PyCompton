@@ -10,11 +10,12 @@ cuales van a sobrevivir
 
 class Particle_Source:
 
-    def __init__(self, position, N):
+    def __init__(self, position, N, energy):
 
         self.position = position
         self.N = N
         self.particles = []
+        self.energy = energy
 
         for n in range(N):
 
@@ -30,6 +31,6 @@ class Particle_Source:
             mu_y = sin_theta*math.sin(phi)
             mu_z = cos_theta
 
-            tmp_particle = particle.Particle(n,self.position, [mu_x, mu_y, mu_z], 10)
+            tmp_particle = particle.Particle(n,self.position, [mu_x, mu_y, mu_z], self.energy)
 
             self.particles.append(tmp_particle)

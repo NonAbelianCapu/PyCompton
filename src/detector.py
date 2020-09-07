@@ -1,13 +1,8 @@
 import particle
 import warnings
-from enum import Enum
+from enums import *
 import numpy as np
 
-class Detector_types(Enum):
-
-	RECTANGULAR = "Rec"
-	SPHERE = "Sph"
-	CUSTOM = "Cst"
 
 class Detector:
 
@@ -23,21 +18,21 @@ class Detector:
 			# WARNING:
 			warning.warn("Geometry not specified, using default (Rectangular)")
 
-			self.L = 3
-			self.H = 3
-			self.D = 2
+			self.L = 0.5
+			self.H = 0.5
+			self.D = 0.5
 
 		if geometry == Detector_types.RECTANGULAR:
 
 			self.geometry_type = Detector_types.RECTANGULAR
-			self.L = 3
-			self.H = 3
-			self.D = 2
+			self.L = 0.5
+			self.H = 0.5
+			self.D = 0.5
 
 
 		self.position = position
-		self.density = 1
-		self.efficiency = 1
+		self.density = 3.63 		# en g/cm**3 es para NaI(Tl)
+		self.efficiency = 1			  # Por defecto vamos a dejarlo con 100% de eficiencia
 
 		# aca van a ir todas las energias depositadas, que eventualmente voy a tener
 		# que discretizar para poder hacer histogramas con una precision parecida a un MCA
@@ -112,18 +107,18 @@ class Detector:
 
 
 		colors = np.array([
-		    [1, 0, 0, 0.5],
-		    [0, 0, 0, 0.5],
-		    [1, 0, 0, 0.5],
-			[1, 0, 0, 0.5],
-			[1, 0, 0, 0.5],
-			[1, 0, 1, 0.5],
-			[1, 0, 0, 0.5],
-		    [1, 0, 0, 0.5],
-		    [1, 0, 0, 0.5],
-			[1, 0, 0, 0.5],
-			[1, 0, 0, 0.5],
-			[1, 0, 0, 0.5]
+		    [0.5, 0.5, 0.5, 0.6],
+		    [0.5, 0.5, 0.5, 0.6],
+		    [0.5, 0.5, 0.5, 0.6],
+			[0.5, 0.5, 0.5, 0.6],
+			[0.5, 0.5, 0.5, 0.6],
+			[0.5, 0.5, 0.5, 0.6],
+			[0.5, 0.5, 0.5, 0.6],
+		    [0.5, 0.5, 0.5, 0.6],
+		    [0.5, 0.5, 0.5, 0.6],
+			[0.5, 0.5, 0.5, 0.6],
+			[0.5, 0.5, 0.5, 0.6],
+			[0.5, 0.5, 0.5, 0.6]
 
 		])
 

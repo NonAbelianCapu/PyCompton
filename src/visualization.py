@@ -9,9 +9,9 @@ import detector
 
 # genero las particulas y los detectores
 
-new_particle_source = particle_source.Particle_Source([0,0,0],100)
+new_particle_source = particle_source.Particle_Source([0,0,0],150,10)
 new_type = detector. Detector_types.RECTANGULAR
-new_detector = detector.Detector(new_type, [0,0,5])
+new_detector = detector.Detector(new_type, [0,0.1,0])
 print(new_detector.get_mesh())
 
 
@@ -25,7 +25,7 @@ for p in new_particle_source.particles:
     y = []
     z = []
 
-    t_max = 35
+    t_max = 4500
     t = 0
 
     while t < t_max:
@@ -38,7 +38,14 @@ for p in new_particle_source.particles:
         y.append(ys)
         z.append(zs)
 
-        p.evolve_particle(0.3)
+        if p.is_in_detector(new_detector):
+
+            angles = p.gen_random_angles()
+            p.update_cosines(angles["sin_theta"], angles["cos_theta"], angles["sin_phi"], angles["cos_phi"])
+            p.evolve(0.00003)
+
+        else:
+            p.evolve(0.03)
 
         t = t + 1
 
@@ -82,7 +89,7 @@ class Visualizer(object):
         self.w.addItem(gz)
 
         m1 = gl.GLMeshItem(vertexes=verts, faces=faces, faceColors=colors, smooth=False)
-        m1.translate(0, 10, 0)
+        m1.translate(0, 0.1, 0)
         m1.setGLOptions('additive')
         self.w.addItem(m1)
 
